@@ -1,70 +1,57 @@
-# Getting Started with Create React App
+## Component Description
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The Enhanced Select Component is a customizable and feature-rich dropdown component designed for easy integration into any React.js codebase. It offers advanced customization options and enhanced functionality to suit various use cases.
 
-## Available Scripts
+## Props
 
-In the project directory, you can run:
+### `options` (array)
 
-### `npm start`
+An array of options for the select component. Each option should have the following properties:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- `value` (string): The value of the option.
+- `label` (string): The label displayed for the option.
+- `description` (string): The extended description of the option.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### `extended` (boolean)
 
-### `npm test`
+If true, displays the option label along with its extended description for every option.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### `defaultValue` (string)
 
-### `npm run build`
+The default value for the select input.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### `onChange` (function)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+A method to handle the change event when the selected value(s) change.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `themeColor` (string)
 
-### `npm run eject`
+The theme color passed from the parent component, which dynamically changes the design of the Select component.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### `isMultiple` (boolean)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+If true, allows multiple options to be selected through checkboxes and displays them in the selected order in the dropdown input box. Each option has a 'x' icon to individually remove them.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### `isOpen` (boolean)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+If true, keeps the dropdown always open.
 
-## Learn More
+### `isClearable` (boolean)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+If true, adds an ‘x’ icon in the input box to clear the selected value when clicked.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### `maxSelections` (number)
 
-### Code Splitting
+Limits the maximum number of selections when `isMultiple` is true.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### `placeholder` (string)
 
-### Analyzing the Bundle Size
+Placeholder text to display in the input box when no option is selected.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### `disabled` (boolean)
 
-### Making a Progressive Web App
+If true, disables the select component, preventing user interaction.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### `customStyles` (object)
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+An object to provide custom styles for various parts of the component.
