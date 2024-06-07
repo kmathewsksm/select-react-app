@@ -185,6 +185,7 @@ function App() {
         <span style={{ fontWeight: "bold" }}>makeAnimated function</span>,{" "}
         <span style={{ fontWeight: "bold" }}>isMulti</span>,{" "}
         <span style={{ fontWeight: "bold" }}>closeMenuOnSelect (false)</span> ,{" "}
+        <span style={{ fontWeight: "bold" }}>maxSelections</span> ,{" "}
         <span style={{ fontWeight: "bold" }}>isOptionDisabled</span>,{" "}
         <span style={{ fontWeight: "bold" }}>defaultValue (2)</span>prop. We are
         also using the defaultValue prop that has selected the first two options
