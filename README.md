@@ -112,7 +112,7 @@ export default App;
 You can dynamically style the component using the themeColor prop and provide additional custom styles through the customStyles prop. The themeColor prop will change the background color, selected option color, and other UI elements.
 
 ```js
-<EnhancedSelectComponent
+<SelectStyles
   customStyles={{
     control: (styles) => ({ ...styles, border: "1px solid #ff5733" }),
     option: (styles, { isSelected }) => ({
