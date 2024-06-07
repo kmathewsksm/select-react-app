@@ -27,7 +27,7 @@ export const SingleSelectComponent = ({
       name="color"
       options={OptionsList}
       onChange={onChange}
-      styles={{ ...getCustomStyles(themeColor), ...customStyles }}
+      styles={customStyles}
     />
   </div>
 );

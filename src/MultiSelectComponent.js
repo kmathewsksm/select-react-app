@@ -25,7 +25,7 @@ export const MultiSelectComponent = ({
       value={selectedOptionMulti}
       onChange={handleMultiChange}
       isOptionDisabled={() => selectedOptionMulti.length >= 3}
-      styles={{ ...getCustomStyles(themeColor), ...customStyles }}
+      styles={customStyles}
     />
   </div>
 );

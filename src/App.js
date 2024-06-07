@@ -20,6 +20,7 @@ export const getCustomStyles = (themeColor) => ({
   option: (styles, { isSelected }) => ({
     ...styles,
     backgroundColor: isSelected ? themeColor : null,
+    color:isSelected?"black":styles.color,
   }),
   multiValue: (styles) => ({
     ...styles,
@@ -31,7 +32,7 @@ export const getCustomStyles = (themeColor) => ({
   }),
   singleValue: (styles) => ({
     ...styles,
-    color: themeColor,
+    color: "black",
   }),
 });
 
@@ -67,7 +68,7 @@ function App() {
       }}
     >
       <br />
-      <h1 style={{ textAlign: "center" }}>Demo on Select Component features</h1>
+      <h1 style={{ textAlign: "center",color:"#092e42" }}>Demo on Select Component features</h1>
       <br />
       <div style={{ width: "100%" }}>
         <h3 style={{ textAlign: "left" }}>
@@ -131,7 +132,7 @@ function App() {
         isLoading={isLoading}
         isRtl={isRtl}
         themeColor={themeColor}
-        customStyles={{}}
+        customStyles={getCustomStyles(themeColor)}
         onChange={(option) => {
           setSelectedOptionSingle(option ? option.description : null);
           if (option) {
@@ -173,7 +174,7 @@ function App() {
         selectedOptionMulti={selectedOptionMulti}
         handleMultiChange={handleMultiChange}
         themeColor={themeColor}
-        customStyles={{}}
+        customStyles={getCustomStyles(themeColor)}
       />
       <br />
       <div>
@@ -214,7 +215,7 @@ function App() {
         isRtl={isRtl}
         isMenuOpen={isMenuOpen}
         themeColor={themeColor}
-        customStyles={{}}
+        customStyles={getCustomStyles(themeColor)}
         onChange={(option) => {
           setSelectedOptionSingle(option ? option.description : null);
           if (option) {

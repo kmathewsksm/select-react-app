@@ -23,7 +23,7 @@ export const ThirdSelectComponent = ({
       options={OptionsList}
       menuIsOpen={isMenuOpen}
       onChange={onChange}
-      styles={{ ...getCustomStyles(themeColor), ...customStyles }}
+      styles={customStyles}
     />
   </div>
 );
