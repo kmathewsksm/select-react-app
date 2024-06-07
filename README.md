@@ -132,6 +132,24 @@ Unit tests are written using Jest and React Testing Library check component beha
 
 -`App.test.js`: Tests the main application component -`SingleSelectComponent.test.js`: Tests the single select component -`MultiSelectComponent.test.js`: Tests the multi-select component -`ThirdSelectComponent.test.js`: Tests the third select component -`OptionsList.test.js`: Tests the options list
 
+## Test Usage
+
+```js
+it("OptionsList has the correct number of options", () => {
+  expect(OptionsList.length).toBe(6);
+});
+
+it("OptionsList contains correct options", () => {
+  const values = OptionsList.map((option) => option.value);
+  expect(values).toContain("chocolate");
+  expect(values).toContain("strawberry");
+  expect(values).toContain("vanilla");
+  expect(values).toContain("mango");
+  expect(values).toContain("pistachio");
+  expect(values).toContain("butterscotch");
+});
+```
+
 ## Accessibility
 
 The Select Component is designed with accessibility in mind. It includes keyboard navigation support and ARIA attributes to ensure all users can use it smoothly and reliably.
