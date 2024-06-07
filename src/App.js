@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Select from "react-select";
-import { OptionsList } from "./OptionsList";
-import { SingleSelectComponent } from "./SingleSelectComponent";
-import { MultiSelectComponent } from "./MultiSelectComponent";
-import { ThirdSelectComponent } from "./ThirdSelectComponent";
+import { OptionsList } from "./components/OptionsList/OptionsList";
+import { SingleSelectComponent } from "./components/SingleSelect/SingleSelectComponent";
+import { MultiSelectComponent } from "./components/MultiSelect/MultiSelectComponent";
+import { ThirdSelectComponent } from "./components/ThirdSelect/ThirdSelectComponent";
 
 export const Checkbox = ({ children, ...props }) => (
   <label style={{ marginRight: "1em" }}>
@@ -20,7 +20,7 @@ export const getCustomStyles = (themeColor) => ({
   option: (styles, { isSelected }) => ({
     ...styles,
     backgroundColor: isSelected ? themeColor : null,
-    color:isSelected?"black":styles.color,
+    color: isSelected ? "black" : styles.color,
   }),
   multiValue: (styles) => ({
     ...styles,
@@ -68,7 +68,9 @@ function App() {
       }}
     >
       <br />
-      <h1 style={{ textAlign: "center",color:"#092e42" }}>Demo on Select Component features</h1>
+      <h1 style={{ textAlign: "center", color: "#092e42" }}>
+        Demo on Select Component features
+      </h1>
       <br />
       <div style={{ width: "100%" }}>
         <h3 style={{ textAlign: "left" }}>
@@ -181,10 +183,13 @@ function App() {
         The above demo of the multi-select component lets us choose multiple
         options from the drop-down menu, along with{" "}
         <span style={{ fontWeight: "bold" }}>makeAnimated function</span>,{" "}
-        <span style={{ fontWeight: "bold" }}>closeMenuOnSelect</span> prop. We
-        are also using the defaultValue prop that has selected the first two
-        options from the drop-down menu. We have also added a custom function to
-        disable the drop-down menu if three options were selected.
+        <span style={{ fontWeight: "bold" }}>isMulti</span>,{" "}
+        <span style={{ fontWeight: "bold" }}>closeMenuOnSelect (false)</span> ,{" "}
+        <span style={{ fontWeight: "bold" }}>isOptionDisabled</span>,{" "}
+        <span style={{ fontWeight: "bold" }}>defaultValue (2)</span>prop. We are
+        also using the defaultValue prop that has selected the first two options
+        from the drop-down menu. We have also added a custom function to disable
+        the drop-down menu if three options were selected.
       </div>
       <br />
       <div style={{ width: "100%" }}>
@@ -223,6 +228,12 @@ function App() {
           }
         }}
       />
+      <br />
+      <div>
+        The above demo of the single-select component is primarily shown for{" "}
+        <span style={{ fontWeight: "bold" }}>menuIsOpen</span>
+      </div>{" "}
+      prop only .
     </div>
   );
 }

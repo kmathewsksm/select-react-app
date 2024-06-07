@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import { OptionsList } from "./OptionsList";
-import { getCustomStyles } from "./App";
+import { OptionsList } from "../OptionsList/OptionsList";
 
 
 export const MultiSelectComponent = ({

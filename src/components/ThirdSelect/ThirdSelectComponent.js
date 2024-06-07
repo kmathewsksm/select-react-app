@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import Select from "react-select";
-import { OptionsList } from "./OptionsList";
-import { getCustomStyles } from "./App";
+import { OptionsList } from "../OptionsList/OptionsList";
 
-export const SingleSelectComponent = ({
-  isClearable,
+export const ThirdSelectComponent = ({
   isSearchable,
-  isDisabled,
-  isLoading,
   isRtl,
+  isMenuOpen,
   onChange,
   themeColor,
   customStyles,
@@ -17,15 +14,13 @@ export const SingleSelectComponent = ({
     <Select
       className="basic-single"
       classNamePrefix="select"
-      placeholder="Select your option here for first select component"
-      isClearable={isClearable}
-      isDisabled={isDisabled}
-      isLoading={isLoading}
+      placeholder="Select your option here for third select component"
       isSearchable={isSearchable}
       isRtl={isRtl}
-      aria-label="single select component"
+      aria-label="third select component with only keeping the menu open"
       name="color"
       options={OptionsList}
+      menuIsOpen={isMenuOpen}
       onChange={onChange}
       styles={customStyles}
     />
