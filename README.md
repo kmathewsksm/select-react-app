@@ -1,6 +1,6 @@
 ## Component Description
 
-The Enhanced Select Component is a customizable and feature-rich dropdown component designed for easy integration into any React.js codebase. It offers advanced customization options and enhanced functionality to suit various use cases.
+The Enhanced Select Component is a versatile and customizable select input component This component supports most modifications and enhanced functionality, making it versatile
 
 ## Props
 
@@ -55,3 +55,83 @@ If true, disables the select component, preventing user interaction.
 ### `customStyles` (object)
 
 An object to provide custom styles for various parts of the component.
+
+### Trial Component usage
+
+```js
+export const OptionsList = [
+{
+value: "chocolate",
+label: "Chocolate",
+description: "Chocolate originates from Ghana",
+},
+{
+value: "strawberry",
+label: "Strawberry",
+description: "Strawberries comes from Turkey",
+},
+
+
+
+const App = () => {
+const [selectedOption, setSelectedOption] = useState(null);
+
+return (
+
+<div>
+<SingleSelectComponent
+options={OptionsList}
+extended={true}
+defaultValue="chocolate"
+onChange={(option) => setSelectedOption(option)}
+themeColor="#98fb98"
+isMultiple={true}
+isOpen={false}
+isClearable={true}
+maxSelections={3}
+placeholder="Select your favorite flavor"
+disabled={false}
+styles={{customStyles}}
+/>
+<div>
+{selectedOption ? (
+<div>Selected: {selectedOption.label}</div>
+) : (
+"Please select an option"
+)}
+</div>
+</div>
+);
+};
+
+export default App;
+```
+
+## Styling
+
+You can dynamically style the component using the themeColor prop and provide additional custom styles through the customStyles prop. The themeColor prop will change the background color, selected option color, and other UI elements.
+
+```js
+<EnhancedSelectComponent
+  customStyles={{
+    control: (styles) => ({ ...styles, border: "1px solid #ff5733" }),
+    option: (styles, { isSelected }) => ({
+      ...styles,
+      backgroundColor: isSelected ? "#ff5733" : null,
+      color: isSelected ? "white" : "black",
+    }),
+  }}
+/>
+```
+
+## Unit Testing
+
+Unit tests are written using Jest and React Testing Library check component behaves as expected.
+
+## Test Files
+
+-`App.test.js`: Tests the main application component -`SingleSelectComponent.test.js`: Tests the single select component -`MultiSelectComponent.test.js`: Tests the multi-select component -`ThirdSelectComponent.test.js`: Tests the third select component -`OptionsList.test.js`: Tests the options list
+
+## Accessibility
+
+The Select Component is designed with accessibility in mind. It includes keyboard navigation support and ARIA attributes to ensure all users can use it smoothly and reliably.
