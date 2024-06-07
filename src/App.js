@@ -230,11 +230,10 @@ function App() {
         }}
       />
       <br />
-      <div>
+      <div style={{ textAlign: "left", width: "100%" }}>
         The above demo of the single-select component is primarily shown for{" "}
-        <span style={{ fontWeight: "bold" }}>menuIsOpen</span>
-      </div>{" "}
-      prop only .
+        <span style={{ fontWeight: "bold" }}>menuIsOpen</span> prop only.
+      </div>
     </div>
   );
 }
