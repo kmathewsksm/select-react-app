@@ -1,28 +1,32 @@
 import React, { useState } from "react";
-import Select from "react-select";
 import { OptionsList } from "../OptionsList/OptionsList";
 
 export const ThirdSelectComponent = ({
-  isSearchable,
-  isRtl,
   isMenuOpen,
   onChange,
-  themeColor,
-  customStyles,
+  placeholder = "Select your option here for third select component",
 }) => (
   <div style={{ width: "500px" }}>
-    <Select
+    <select
+      style={{ width: "100%" }}
       className="basic-single"
       classNamePrefix="select"
-      placeholder="Select your option here for third select component"
-      isSearchable={isSearchable}
-      isRtl={isRtl}
+      placeholder={placeholder}
       aria-label="third select component with only keeping the menu open"
       name="color"
-      options={OptionsList}
-      menuIsOpen={isMenuOpen}
-      onChange={onChange}
-      styles={customStyles}
-    />
+      onChange={(e) => {
+        const selectedOption = OptionsList.find(
+          (option) => option.value === e.target.value
+        );
+        onChange(selectedOption);
+      }}
+      size={isMenuOpen ? OptionsList.length : 1}
+    >
+      {OptionsList.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
   </div>
 );

@@ -1,0 +1,46 @@
+.state-dropdown {
+  position: relative;
+  border: none;
+  width: 100%;
+}
+
+.state-dropdown button {
+  background-color: white;
+  border-radius: 5px;
+  height: 30px;
+  width: 100%;
+  color: black;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  /* border: 10px black; */
+}
+
+.panel {
+  position: absolute;
+  background-color: beige;
+  border: 1px solid black;
+  border-radius: 5px;
+  color: black;
+  padding: 10px;
+  width: 100%;
+  display: grid;
+  overflow-y: auto;
+  height: 200px;
+  /* grid-template-columns: repeat(3, 1fr); */
+}
+
+.panel fieldset {
+  display: flex;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.panel fieldset.selected {
+  background: lightblue;
+}
+
+.panel fieldset:hover {
+  background-color: lightblue;
+  cursor: pointer;
+}
