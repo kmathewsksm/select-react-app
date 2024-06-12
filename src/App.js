@@ -24,7 +24,7 @@ function App() {
   const [isDisabled, setIsDisabled] = useState(false);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [themeColor, setThemeColor] = useState("#98fb98");
+  const [themeColor, setThemeColor] = useState("#98F0FB");
   const [selectedOptionSingle, setSelectedOptionSingle] = useState(null);
 
   const customStyles = getCustomStyles(themeColor);
