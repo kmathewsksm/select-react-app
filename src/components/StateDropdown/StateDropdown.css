@@ -19,18 +19,6 @@
   border: 1px solid black;
 }
 
-/* .state-dropdown div select-button {
-  background-color: white;
-  border-radius: 5px;
-  height: 30px;
-  width: 100%;
-  color: black;
-  display: flex;
-  align-items: center;
-  padding-left: 10px;
-   border: 10px black; 
-} */
-
 .panel {
   position: absolute;
   background-color: beige;

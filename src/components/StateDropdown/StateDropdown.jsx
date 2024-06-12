@@ -14,10 +14,6 @@ export function StateDropdown() {
 
   console.log(selectedStates);
 
-  // const numberOfStatesSelected =
-  //   Object.values(selectedStates).filter(Boolean).length;
-  // console.log(numberOfStatesSelected);
-
   const dropdownRef = useRef(null);
 
   useEffect(() => {

@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-// import Select from "react-select";
-import { OptionsList } from "./components/OptionsList/OptionsList";
 import { SingleSelectComponent } from "./components/SingleSelect/SingleSelectComponent";
-import { MultiSelectComponent } from "./components/MultiSelect/MultiSelectComponent";
 import { ThirdSelectComponent } from "./components/ThirdSelect/ThirdSelectComponent";
 import { StateDropdown } from "./components/StateDropdown/StateDropdown";
 
@@ -39,9 +36,7 @@ export const getCustomStyles = (themeColor) => ({
 
 function App() {
   const [isClearable, setIsClearable] = useState(true);
-  // const [isSearchable, setIsSearchable] = useState(true);
   const [isDisabled, setIsDisabled] = useState(false);
-  // const [isLoading, setIsLoading] = useState(false);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [themeColor, setThemeColor] = useState("#98fb98");
