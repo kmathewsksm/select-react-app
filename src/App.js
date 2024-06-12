@@ -11,26 +11,11 @@ export const Checkbox = ({ children, ...props }) => (
 );
 
 export const getCustomStyles = (themeColor) => ({
-  control: (styles) => ({
-    ...styles,
-    backgroundColor: themeColor ? themeColor : "white",
-  }),
-  option: (styles, { isSelected }) => ({
-    ...styles,
-    backgroundColor: isSelected ? themeColor : null,
-    color: isSelected ? "black" : styles.color,
-  }),
-  multiValue: (styles) => ({
-    ...styles,
-    backgroundColor: themeColor,
-  }),
-  multiValueLabel: (styles) => ({
-    ...styles,
-    color: "white",
-  }),
-  singleValue: (styles) => ({
-    ...styles,
-    color: "black",
+  control: {
+    backgroundColor: themeColor || "white",
+  },
+  option: (isSelected) => ({
+    color: isSelected ? "black" : "black",
   }),
 });
 
@@ -41,7 +26,8 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [themeColor, setThemeColor] = useState("#98fb98");
   const [selectedOptionSingle, setSelectedOptionSingle] = useState(null);
-  
+
+  const customStyles = getCustomStyles(themeColor);
 
   return (
     <>
@@ -102,7 +88,7 @@ function App() {
         </div>
         <br />
         <SingleSelectComponent
-          style={{ width: "100%" }}
+          style={{ width: "100%"}}
           isClearable={isClearable}
           isDisabled={isDisabled}
           onChange={(option) => {
@@ -111,6 +97,7 @@ function App() {
               console.log("Selected value:", option.value);
             }
           }}
+          customStyles={customStyles}
         />
         <br />
         <div>
@@ -127,8 +114,7 @@ function App() {
           <span style={{ fontWeight: "bold" }}>single select</span> component,
           we have{" "}
           <span style={{ fontWeight: "bold" }}>
-            isClearable, isDisabled, isLoading, isSearchable, isRtl,
-            placeholder, name, options, onChange{" "}
+            isClearable, isDisabled, placeholder, name, options, onChange{" "}
           </span>
           props that are passed as boolean values to the checkboxes and towards
           the select component. onChange prop, options prop are passed as list
