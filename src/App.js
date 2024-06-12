@@ -46,16 +46,7 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [themeColor, setThemeColor] = useState("#98fb98");
   const [selectedOptionSingle, setSelectedOptionSingle] = useState(null);
-  const [selectedOptionMulti, setSelectedOptionMulti] = useState([
-    OptionsList[0],
-    OptionsList[1],
-  ]);
-
-  const handleMultiChange = (selectedOptions) => {
-    if (selectedOptions.length <= 3) {
-      setSelectedOptionMulti(selectedOptions);
-    }
-  };
+  
 
   return (
     <>

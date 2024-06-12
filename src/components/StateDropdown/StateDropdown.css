@@ -4,7 +4,7 @@
   width: 100%;
 }
 
-.state-dropdown button {
+.select-button {
   background-color: white;
   border-radius: 5px;
   height: 30px;
@@ -13,8 +13,23 @@
   display: flex;
   align-items: center;
   padding-left: 10px;
-  /* border: 10px black; */
+  padding-right: 10px;
+  justify-content: space-between;
+  cursor: pointer;
+  border: 1px solid black;
 }
+
+/* .state-dropdown div select-button {
+  background-color: white;
+  border-radius: 5px;
+  height: 30px;
+  width: 100%;
+  color: black;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+   border: 10px black; 
+} */
 
 .panel {
   position: absolute;
@@ -23,24 +38,50 @@
   border-radius: 5px;
   color: black;
   padding: 10px;
-  width: 100%;
+  width: 97.5%;
   display: grid;
   overflow-y: auto;
   height: 200px;
   /* grid-template-columns: repeat(3, 1fr); */
 }
 
-.panel fieldset {
+.button-text {
+  flex-grow: 1;
+}
+
+.dropdown-icon {
+  transition: transform 0.3s;
+}
+
+.dropdown-icon.open {
+  transform: rotate(180deg);
+}
+
+.panel div {
   display: flex;
   border-radius: 10px;
   padding: 5px;
 }
 
-.panel fieldset.selected {
+.panel div.selected {
   background: lightblue;
 }
 
-.panel fieldset:hover {
+.panel div:hover {
   background-color: lightblue;
   cursor: pointer;
+}
+
+.selected-option {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 8px;
+  padding: 4px 8px;
+  background-color: lightblue;
+  border-radius: 4px;
+}
+
+.close-icon {
+  cursor: pointer;
+  margin-left: 4px;
 }

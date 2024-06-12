@@ -24,7 +24,7 @@ const handleClearSelection = () => {
   return (
     <div style={{ width: "500px" }}>
       <select
-        style={{ width: "80%" }}
+        style={{ width: "80%" , backgroundColor:""}}
         id="single-select"
         value={selectedValue?selectedValue.value:""}
         disabled={isDisabled}
