@@ -149,45 +149,7 @@ function App() {
           options from the drop-down menu. We have also added a custom function
           to disable the drop-down menu if three options were selected.
         </div>
-        <br />
-        <div style={{ width: "100%" }}>
-          <h3 style={{ textAlign: "left" }}>
-            Single Select Component with keeping menu open.
-          </h3>
-        </div>
-        <br />
-        {/* <div
-          style={{
-            color: "hsl(0, 0%, 40%)",
-            display: "inline-block",
-            fontSize: 12,
-            fontStyle: "italic",
-            marginTop: "1em",
-          }}
-        >
-          <Checkbox
-            checked={isMenuOpen}
-            onChange={() => setIsMenuOpen((state) => !state)}
-          >
-            Keep it Open
-          </Checkbox>
-        </div>
-        <br />
-        <ThirdSelectComponent
-          isMenuOpen={isMenuOpen}
-          onChange={(option) => {
-            setSelectedOptionSingle(option ? option.description : null);
-            if (option) {
-              console.log("Selected value:", option.value);
-            }
-          }}
-        />
-        <br />
-        <div style={{ textAlign: "left", width: "100%" }}>
-          The above demo of the single-select component is primarily shown for{" "}
-          <span style={{ fontWeight: "bold" }}>IsOpen</span> prop only.
-        </div> */}
-        <br />
+        
       </div>
     </>
   );
