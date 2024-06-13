@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { SingleSelectComponent } from "./components/SingleSelect/SingleSelectComponent";
-import { ThirdSelectComponent } from "./components/ThirdSelect/ThirdSelectComponent";
 import { StateDropdown } from "./components/StateDropdown/StateDropdown";
 
 export const Checkbox = ({ children, ...props }) => (
