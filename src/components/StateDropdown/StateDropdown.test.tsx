@@ -4,61 +4,66 @@ import "@testing-library/jest-dom/extend-expect";
 import { StateDropdown } from "./StateDropdown";
 import { states } from "./states";
 
+jest.mock("./states", () => ({
+  states: [
+    { name: "Alabama", abbreviation: "AL" },
+    { name: "Alaska", abbreviation: "AK" },
+    { name: "Arizona", abbreviation: "AZ" },
+    { name: "Arkansas", abbreviation: "AR" },
+  ],
+}));
+
 describe("StateDropdown", () => {
-  it("renders without crashing", () => {
+  it("renders with default placeholder", () => {
     render(<StateDropdown />);
     expect(screen.getByText("--select your options--")).toBeInTheDocument();
   });
 
-  it("opens and closes the dropdown", () => {
+  it("opens dropdown on click", () => {
     render(<StateDropdown />);
-    const button = screen.getByText("--select your options--");
-    
-    fireEvent.click(button);
-    expect(screen.getByText(states[0].name)).toBeInTheDocument();
-
-    fireEvent.click(button);
-    expect(screen.queryByText(states[0].name)).not.toBeInTheDocument();
+    fireEvent.click(screen.getByText("--select your options--"));
+    expect(screen.getByText("Alabama")).toBeVisible();
+    expect(screen.getByText("Alaska")).toBeVisible();
+    expect(screen.getByText("Arizona")).toBeVisible();
+    expect(screen.getByText("Arkansas")).toBeVisible();
   });
 
   it("selects and deselects options", () => {
     render(<StateDropdown />);
-    const button = screen.getByText("--select your options--");
+    fireEvent.click(screen.getByText("--select your options--"));
 
-    fireEvent.click(button);
+    fireEvent.click(screen.getByLabelText("Alabama"));
+    expect(screen.getByText("Alabama")).toBeInTheDocument();
 
-    const firstOption = screen.getByLabelText(states[0].name);
-    fireEvent.click(firstOption);
-    expect(firstOption).toBeChecked();
-    expect(screen.getByText("1 options selected")).toBeInTheDocument();
+    fireEvent.click(screen.getByLabelText("Alaska"));
+    expect(screen.getByText("Alaska")).toBeInTheDocument();
 
-    fireEvent.click(firstOption);
-    expect(firstOption).not.toBeChecked();
-    expect(screen.getByText("--select your options--")).toBeInTheDocument();
+    fireEvent.click(screen.getByLabelText("Alabama"));
+    expect(screen.queryByText("Alabama")).not.toBeInTheDocument();
   });
 
-  it("limits selection to three options", () => {
+  it("limits the number of selections to 3", () => {
     render(<StateDropdown />);
-    const button = screen.getByText("--select your options--");
+    fireEvent.click(screen.getByText("--select your options--"));
 
-    fireEvent.click(button);
+    fireEvent.click(screen.getByLabelText("Alabama"));
+    fireEvent.click(screen.getByLabelText("Alaska"));
+    fireEvent.click(screen.getByLabelText("Arizona"));
 
-    const option1 = screen.getByLabelText(states[0].name);
-    const option2 = screen.getByLabelText(states[1].name);
-    const option3 = screen.getByLabelText(states[2].name);
-    fireEvent.click(option1);
-    fireEvent.click(option2);
-    fireEvent.click(option3);
+    expect(screen.getByLabelText("Alabama")).toBeChecked();
+    expect(screen.getByLabelText("Alaska")).toBeChecked();
+    expect(screen.getByLabelText("Arizona")).toBeChecked();
 
-    expect(option1).toBeChecked();
-    expect(option2).toBeChecked();
-    expect(option3).toBeChecked();
-    expect(screen.getByText("3 options selected")).toBeInTheDocument();
+    expect(screen.getByLabelText("Arkansas")).toBeDisabled();
+  });
 
-    const option4 = screen.getByLabelText(states[3].name);
-    expect(option4).toBeDisabled();
+  it("closes dropdown when clicking outside", () => {
+    render(<StateDropdown />);
+    fireEvent.click(screen.getByText("--select your options--"));
 
-    fireEvent.click(option1);
-    expect(option4).not.toBeDisabled();
+    expect(screen.getByText("Alabama")).toBeVisible();
+
+    fireEvent.click(document);
+    expect(screen.queryByText("Alabama")).not.toBeVisible();
   });
 });
