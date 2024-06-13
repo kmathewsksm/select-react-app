@@ -22,11 +22,11 @@ export const getCustomStyles = (themeColor) => ({
 function App() {
   const [isClearable, setIsClearable] = useState(true);
   const [isDisabled, setIsDisabled] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false); 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [themeColor, setThemeColor] = useState("#98F0FB");
   const [selectedOptionSingle, setSelectedOptionSingle] = useState(null);
 
-   const customStyles = getCustomStyles(themeColor);
+  const customStyles = getCustomStyles(themeColor);
 
   const handleSelectChange = (selectedOption) => {
     console.log("Selected option:", selectedOption);
@@ -106,7 +106,7 @@ function App() {
           onChange={handleSelectChange}
           customStyles={customStyles}
         />
-              <br />
+        <br />
         <div>
           {selectedOptionSingle ? (
             <div>Information: {selectedOptionSingle.description}</div>
@@ -149,7 +149,6 @@ function App() {
           options from the drop-down menu. We have also added a custom function
           to disable the drop-down menu if three options were selected.
         </div>
-        
       </div>
     </>
   );
