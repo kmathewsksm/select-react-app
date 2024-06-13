@@ -20,7 +20,7 @@ export const SingleSelectComponent = ({
   const [selectedValue, setSelectedValue] = useState(null);
   const dropdownRef = useRef(null);
 
-  useEffect(() => {
+   useEffect(() => {
     const onClick = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target) && !isMenuOpen) {
         setIsDropdownDisplayed(false);
@@ -39,8 +39,11 @@ export const SingleSelectComponent = ({
   const handleOptionClick = (option) => {
     setSelectedValue(option);
     onChange(option);
-    setIsDropdownDisplayed(false);
+    if (!isMenuOpen) {
+      setIsDropdownDisplayed(false); 
+    }
   };
+
 
   const handleClearClick = (e) => {
     e.stopPropagation();

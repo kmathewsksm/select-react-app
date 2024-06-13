@@ -12,8 +12,6 @@ export function StateDropdown() {
     return initialState;
   });
 
-  console.log(selectedStates);
-
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -35,7 +33,7 @@ export function StateDropdown() {
         states.find((state) => state.abbreviation === abbreviation).name
     );
 
-  function AddSelectedStates(state, isSelected) {
+  function addSelectedStates(state, isSelected) {
     setSelectedStates((prevState) => ({
       ...prevState,
       [state]: isSelected,
@@ -67,7 +65,7 @@ export function StateDropdown() {
                       const abbreviationToRemove = states.find(
                         (state) => state.name === stateName
                       ).abbreviation;
-                      AddSelectedStates(abbreviationToRemove, false);
+                      addSelectedStates(abbreviationToRemove, false);
                     }}
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -101,7 +99,7 @@ export function StateDropdown() {
             >
               <input
                 onChange={(e) =>
-                  AddSelectedStates(state.abbreviation, e.target.checked)
+                  addSelectedStates(state.abbreviation, e.target.checked)
                 }
                 checked={selectedStates[state.abbreviation]}
                 id={`input-${state.abbreviation}`}
