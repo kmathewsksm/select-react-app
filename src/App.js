@@ -22,12 +22,16 @@ export const getCustomStyles = (themeColor) => ({
 function App() {
   const [isClearable, setIsClearable] = useState(true);
   const [isDisabled, setIsDisabled] = useState(false);
-
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false); 
   const [themeColor, setThemeColor] = useState("#98F0FB");
   const [selectedOptionSingle, setSelectedOptionSingle] = useState(null);
 
-  const customStyles = getCustomStyles(themeColor);
+   const customStyles = getCustomStyles(themeColor);
+
+  const handleSelectChange = (selectedOption) => {
+    console.log("Selected option:", selectedOption);
+    setSelectedOptionSingle(selectedOption);
+  };
 
   return (
     <>
@@ -85,24 +89,27 @@ function App() {
           >
             Disabled
           </Checkbox>
+
+          <Checkbox
+            checked={isMenuOpen}
+            onChange={() => setIsMenuOpen((state) => !state)}
+          >
+            Keep it Open
+          </Checkbox>
         </div>
         <br />
         <SingleSelectComponent
-          style={{ width: "100%"}}
+          style={{ width: "100%" }}
           isClearable={isClearable}
           isDisabled={isDisabled}
-          onChange={(option) => {
-            setSelectedOptionSingle(option ? option.description : null);
-            if (option) {
-              console.log("Selected value:", option.value);
-            }
-          }}
+          isMenuOpen={isMenuOpen}
+          onChange={handleSelectChange}
           customStyles={customStyles}
         />
-        <br />
+              <br />
         <div>
           {selectedOptionSingle ? (
-            <div>Information: {selectedOptionSingle}</div>
+            <div>Information: {selectedOptionSingle.description}</div>
           ) : (
             "Please select an option"
           )}
@@ -149,7 +156,7 @@ function App() {
           </h3>
         </div>
         <br />
-        <div
+        {/* <div
           style={{
             color: "hsl(0, 0%, 40%)",
             display: "inline-block",
@@ -179,7 +186,7 @@ function App() {
         <div style={{ textAlign: "left", width: "100%" }}>
           The above demo of the single-select component is primarily shown for{" "}
           <span style={{ fontWeight: "bold" }}>IsOpen</span> prop only.
-        </div>
+        </div> */}
         <br />
       </div>
     </>

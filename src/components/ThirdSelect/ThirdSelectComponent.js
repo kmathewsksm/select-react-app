@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { OptionsList } from "../OptionsList/OptionsList";
 
 export const ThirdSelectComponent = ({
