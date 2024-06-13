@@ -6,7 +6,7 @@ export const SingleSelectComponent = ({
   isClearable,
   isDisabled,
   isMenuOpen = false,
-   onChange,
+  onChange,
   placeholder = "Select your option here for first select component",
   customStyles = {
     control: { backgroundColor: "#f0f0f0" },
@@ -20,7 +20,7 @@ export const SingleSelectComponent = ({
   const [selectedValue, setSelectedValue] = useState(null);
   const dropdownRef = useRef(null);
 
-   useEffect(() => {
+  useEffect(() => {
     const onClick = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target) && !isMenuOpen) {
         setIsDropdownDisplayed(false);
@@ -44,32 +44,32 @@ export const SingleSelectComponent = ({
     }
   };
 
-
   const handleClearClick = (e) => {
     e.stopPropagation();
     setSelectedValue(null);
     onChange(null);
-    setIsDropdownDisplayed(false);
+    if (!isMenuOpen) {
+      setIsDropdownDisplayed(false); 
+    }
   };
 
   const toggleDropdown = (e) => {
-    if (!isDisabled && !isMenuOpen) {
+    if (!isDisabled) {
       e.stopPropagation();
-      setIsDropdownDisplayed((prev) => !prev);
+      setIsDropdownDisplayed((prev) => !prev); 
     }
   };
 
   return (
     <div
       className={`single-select-container ${isDisabled ? "disabled" : ""}`}
-      style={{ backgroundColor: isDisabled ? "#d3d3d3" : customStyles.control.backgroundColor }}
+      style={{ borderColor: isDisabled ? "#d3d3d3" : customStyles.control.backgroundColor }}
       onClick={toggleDropdown}
       ref={dropdownRef}
     >
       <span>{selectedValue ? selectedValue.label : placeholder}</span>
       <div style={{ display: "flex", alignItems: "center" }}>
         {isClearable && selectedValue && (
-          <>
             <svg
               className="close-icon"
               onClick={handleClearClick}
@@ -82,23 +82,22 @@ export const SingleSelectComponent = ({
               <path d="M0 0h24v24H0z" fill="none" />
               <path d="M18.3 5.71a.996.996 0 0 0-1.41 0L12 10.59 7.11 5.7A.996.996 0 1 0 5.7 7.11L10.59 12 5.7 16.89a.996.996 0 1 0 1.41 1.41L12 13.41l4.89 4.89a.996.996 0 1 0 1.41-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z" />
             </svg>
-            {" | "}
-          </>
         )}
+        <>{" | "}
         <svg
           className={`single-select-icon ${isDropdownDisplayed ? "rotated" : ""}`}
           xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
+          width="24"
+          height="24"
           viewBox="0 0 24 24"
         >
           <path d="M7 10l5 5 5-5z" />
-        </svg>
+        </svg></>
       </div>
       {isDropdownDisplayed && (
         <div
           className="single-select-dropdown"
-          style={{ backgroundColor: customStyles.control.backgroundColor }}
+          style={{ backgroundColor:"white", borderColor: customStyles.control.backgroundColor }}
         >
           {OptionsList.map((option) => (
             <div
