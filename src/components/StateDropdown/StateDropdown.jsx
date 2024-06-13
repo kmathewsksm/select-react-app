@@ -79,15 +79,18 @@ export function StateDropdown() {
               ))
             : "--select your options--"}
         </span>
-        <svg
-          className={`dropdown-icon ${isDropdownDisplayed ? "open" : ""}`}
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          width="24"
-          height="24"
-        >
-          <path d="M7 10l5 5 5-5H7z" />
-        </svg>
+        <div className="dropdown-controls">
+          <span className="pipe-symbol">|</span>
+          <svg
+            className={`dropdown-icon ${isDropdownDisplayed ? "open" : ""}`}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+          >
+            <path d="M7 10l5 5 5-5H7z" />
+          </svg>
+        </div>
       </div>
 
       {isDropdownDisplayed && (

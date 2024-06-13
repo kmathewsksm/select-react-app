@@ -21,6 +21,15 @@
   border: 1px solid black;
 }
 
+.dropdown-controls {
+  display: flex;
+  align-items: center;
+}
+
+.pipe-symbol {
+  margin-right: 5px;
+}
+
 .panel {
   position: absolute;
   background-color: beige;
@@ -75,6 +84,7 @@
   padding-top: 50px;
   padding-bottom: 50px;
 }
+
 .close-icon {
   cursor: pointer;
   margin-left: 4px;
