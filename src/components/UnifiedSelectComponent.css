@@ -18,6 +18,8 @@
 
 .unified-select-container .close-icon {
   fill: #888;
+  cursor: pointer;
+  margin-left: 4px; /* Ensure consistent margin */
 }
 
 .unified-select-container .unified-select-icon.rotated {
@@ -54,12 +56,6 @@
   background-color: #f0f0f0;
 }
 
-.individual-close-icon {
-  fill: #888;
-  cursor: pointer;
-  margin-left: 4px;
-}
-
 .selected-option {
   display: inline-flex;
   align-items: center;
@@ -67,12 +63,6 @@
   padding: 4px 8px;
   background-color: lightblue;
   border-radius: 4px;
-}
-
-.selected-options {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 8px;
 }
 
 .close-icon {
