@@ -6,7 +6,7 @@ import { states } from "./StateDropdown/states";
 export function UnifiedSelectComponent({
   isMulti,
   isClearable,
-  isDisabled,
+  isDisabled: propIsDisabled,
   isMenuOpen = false,
   onChange,
   placeholder = "Select your option here",
@@ -29,6 +29,7 @@ export function UnifiedSelectComponent({
       return null;
     }
   });
+  const [isDropdownDisabled, setIsDropdownDisabled] = useState(false);
 
   const dropdownRef = useRef(null);
 
@@ -50,14 +51,30 @@ export function UnifiedSelectComponent({
     }
   }, [isMenuOpen, isMulti]);
 
-  const handleOptionClick = (option) => {
+  useEffect(() => {
     if (isMulti) {
-      setSelectedValues((prevState) => ({
-        ...prevState,
-        [option.abbreviation]: !prevState[option.abbreviation],
-      }));
+      const selectedCount =
+        Object.values(selectedValues).filter(Boolean).length;
+      setIsDropdownDisabled(selectedCount >= 3);
+    }
+  }, [selectedValues, isMulti]);
+
+  const handleOptionClick = (option) => {
+    if (isMulti && isDropdownDisabled && !selectedValues[option.abbreviation]) {
+      return; // Prevent adding more options if disabled
+    }
+
+    if (isMulti) {
+      const newSelectedValues = {
+        ...selectedValues,
+        [option.abbreviation]: !selectedValues[option.abbreviation],
+      };
+      setSelectedValues(newSelectedValues);
+      const selectedCount =
+        Object.values(newSelectedValues).filter(Boolean).length;
+      setIsDropdownDisabled(selectedCount >= 3);
       onChange(
-        Object.entries(selectedValues)
+        Object.entries(newSelectedValues)
           .filter(([abbreviation, isSelected]) => isSelected)
           .map(([abbreviation]) =>
             states.find((state) => state.abbreviation === abbreviation)
@@ -70,31 +87,32 @@ export function UnifiedSelectComponent({
     }
   };
 
+  const handleRemoveOption = (e, abbreviation) => {
+    e.stopPropagation();
+    const newSelectedValues = {
+      ...selectedValues,
+      [abbreviation]: false,
+    };
+    setSelectedValues(newSelectedValues);
+    const selectedCount =
+      Object.values(newSelectedValues).filter(Boolean).length;
+    setIsDropdownDisabled(selectedCount >= 3);
+    onChange(
+      Object.entries(newSelectedValues)
+        .filter(([abbr, isSelected]) => isSelected)
+        .map(([abbr]) => states.find((state) => state.abbreviation === abbr))
+    );
+  };
+
   const handleClearClick = (e) => {
     e.stopPropagation();
     setSelectedValues(isMulti ? {} : null);
+    setIsDropdownDisabled(false);
     onChange(isMulti ? [] : null);
   };
 
-  const handleIndividualClearClick = (e, option) => {
-    e.stopPropagation();
-    if (isMulti) {
-      setSelectedValues((prevState) => {
-        const newState = { ...prevState, [option.abbreviation]: false };
-        onChange(
-          Object.entries(newState)
-            .filter(([abbreviation, isSelected]) => isSelected)
-            .map(([abbreviation]) =>
-              states.find((state) => state.abbreviation === abbreviation)
-            )
-        );
-        return newState;
-      });
-    }
-  };
-
   const toggleDropdown = (e) => {
-    if (!isDisabled) {
+    if (!propIsDisabled && (!isMulti || !isDropdownDisabled)) {
       e.stopPropagation();
       setIsDropdownDisplayed((prev) => !prev);
     }
@@ -117,36 +135,41 @@ export function UnifiedSelectComponent({
 
   return (
     <div
-      className={`unified-select-container ${isDisabled ? "disabled" : ""}`}
+      className={`unified-select-container ${
+        isMulti && isDropdownDisabled ? "disabled" : ""
+      }`}
       style={{
-        borderColor: isDisabled
+        borderColor: isMulti
+          ? isDropdownDisabled
+            ? "#d3d3d3"
+            : customStyles.control.backgroundColor
+          : propIsDisabled
           ? "#d3d3d3"
           : customStyles.control.backgroundColor,
       }}
       onClick={toggleDropdown}
       ref={dropdownRef}
     >
-      <span>
+      <div className="selected-options-container">
         {isMulti
           ? numberOfStatesSelected > 0
             ? selectedStateNames.map((stateName) => (
                 <span key={stateName} className="selected-option">
                   {stateName}
                   <svg
-                    className="close-icon"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      const abbreviationToRemove = states.find(
-                        (state) => state.name === stateName
-                      ).abbreviation;
-                      handleIndividualClearClick(e, {
-                        abbreviation: abbreviationToRemove,
-                      });
-                    }}
+                    className="remove-icon"
+                    onClick={(e) =>
+                      handleRemoveOption(
+                        e,
+                        states.find((state) => state.name === stateName)
+                          .abbreviation
+                      )
+                    }
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    width="16"
-                    height="16"
+                    width="12"
+                    height="12"
+                    style={{ cursor: "pointer", marginLeft: "4px" }}
                   >
                     <path d="M0 0h24v24H0z" fill="none" />
                     <path d="M18.3 5.71a.996.996 0 0 0-1.41 0L12 10.59 7.11 5.7A.996.996 0 1 0 5.7 7.11L10.59 12 5.7 16.89a.996.996 0 1 0 1.41 1.41L12 13.41l4.89 4.89a.996.996 0 1 0 1.41-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z" />
@@ -157,7 +180,7 @@ export function UnifiedSelectComponent({
           : selectedValues
           ? selectedValues.label
           : placeholder}
-      </span>
+      </div>
       <div style={{ display: "flex", alignItems: "center" }}>
         {isClearable &&
           (isMulti ? numberOfStatesSelected > 0 : selectedValues) && (
@@ -214,21 +237,13 @@ export function UnifiedSelectComponent({
                 handleOptionClick(option);
               }}
             >
+              <input
+                type="checkbox"
+                checked={isMulti && selectedValues[option.abbreviation]}
+                onChange={(e) => e.stopPropagation()}
+                style={{ marginRight: "8px" }}
+              />
               {option.label || option.name}
-              {isMulti && selectedValues[option.abbreviation] && (
-                <svg
-                  className="individual-close-icon"
-                  onClick={(e) => handleIndividualClearClick(e, option)}
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="16"
-                  height="16"
-                  style={{ cursor: "pointer", marginLeft: "8px" }}
-                >
-                  <path d="M0 0h24v24H0z" fill="none" />
-                  <path d="M18.3 5.71a.996.996 0 0 0-1.41 0L12 10.59 7.11 5.7A.996.996 0 1 0 5.7 7.11L10.59 12 5.7 16.89a.996.996 0 1 0 1.41 1.41L12 13.41l4.89 4.89a.996.996 0 1 0 1.41-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z" />
-                </svg>
-              )}
             </div>
           ))}
         </div>

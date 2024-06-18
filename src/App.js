@@ -5,7 +5,7 @@ import { UnifiedSelectComponent } from "./components/UnifiedSelectComponent";
 
 export const Checkbox = ({ children, ...props }) => (
   <label style={{ marginRight: "1em" }}>
-    <input type="checkbox" {...props} style={{color:"blue"}} />
+    <input type="checkbox" {...props} style={{ color: "blue" }} />
     {children}
   </label>
 );
@@ -145,8 +145,7 @@ function App() {
       <UnifiedSelectComponent
         isMulti={true}
         isClearable={isClearable}
-        isDisabled={isDisabled}
-        isMenuOpen={isMenuOpen}
+        isDisabled={false} // Prevent the parent from controlling this prop
         onChange={handleSelectChangeMulti}
         placeholder="Select your options here"
         options={states}
