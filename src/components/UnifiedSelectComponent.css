@@ -14,7 +14,6 @@
 .unified-select-container.disabled {
   cursor: not-allowed;
   opacity: 1;
-  background-color: ;
 }
 
 .unified-select-container .close-icon {
@@ -57,6 +56,8 @@
 
 .individual-close-icon {
   fill: #888;
+  cursor: pointer;
+  margin-left: 4px;
 }
 
 .selected-option {
@@ -69,11 +70,13 @@
 }
 
 .selected-options {
-  padding-top: 50px;
-  padding-bottom: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 8px;
 }
 
 .close-icon {
+  fill: #888;
   cursor: pointer;
   margin-left: 4px;
 }

@@ -29,6 +29,7 @@ export function UnifiedSelectComponent({
       return null;
     }
   });
+
   const [isDropdownDisabled, setIsDropdownDisabled] = useState(false);
 
   const dropdownRef = useRef(null);
@@ -46,12 +47,14 @@ export function UnifiedSelectComponent({
   }, []);
 
   useEffect(() => {
+    // Ensure dropdown display reflects prop changes for single select
     if (!isMulti) {
-      setIsDropdownDisplayed(isMenuOpen);
+      setIsDropdownDisplayed(isMenuOpen && !propIsDisabled);
     }
-  }, [isMenuOpen, isMulti]);
+  }, [isMenuOpen, isMulti, propIsDisabled]);
 
   useEffect(() => {
+    // Update dropdown disabled state for multi-select
     if (isMulti) {
       const selectedCount =
         Object.values(selectedValues).filter(Boolean).length;
@@ -83,7 +86,7 @@ export function UnifiedSelectComponent({
     } else {
       setSelectedValues(option);
       onChange(option);
-      setIsDropdownDisplayed(false);
+      setIsDropdownDisplayed(false); // Close dropdown after single select
     }
   };
 
@@ -136,7 +139,7 @@ export function UnifiedSelectComponent({
   return (
     <div
       className={`unified-select-container ${
-        isMulti && isDropdownDisabled ? "disabled" : ""
+        (isMulti && isDropdownDisabled) || propIsDisabled ? "disabled" : ""
       }`}
       style={{
         borderColor: isMulti
@@ -237,12 +240,14 @@ export function UnifiedSelectComponent({
                 handleOptionClick(option);
               }}
             >
-              <input
-                type="checkbox"
-                checked={isMulti && selectedValues[option.abbreviation]}
-                onChange={(e) => e.stopPropagation()}
-                style={{ marginRight: "8px" }}
-              />
+              {isMulti && (
+                <input
+                  type="checkbox"
+                  checked={selectedValues[option.abbreviation]}
+                  onChange={(e) => e.stopPropagation()}
+                  style={{ marginRight: "8px" }}
+                />
+              )}
               {option.label || option.name}
             </div>
           ))}

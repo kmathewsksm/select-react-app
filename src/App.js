@@ -39,7 +39,7 @@ function App() {
     setSelectedOptionsMulti(selectedOptions);
   };
 
-  return (
+   return (
     <div
       style={{
         alignItems: "center",
@@ -135,6 +135,7 @@ function App() {
         ice creams that are rendered in the drop-down menu. Placeholder text
         within the background of the select component.
       </div>
+
       <br />
       <div style={{ width: "100%" }}>
         <h3 style={{ textAlign: "left" }}>
