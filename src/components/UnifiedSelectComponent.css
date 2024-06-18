@@ -1,0 +1,78 @@
+.unified-select-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 80%;
+}
+
+.unified-select-container.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.unified-select-container .close-icon {
+  fill: #888;
+}
+
+.unified-select-container .unified-select-icon.rotated {
+  transform: rotate(180deg);
+}
+
+.unified-select-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  z-index: 1000;
+  margin-top: 5px;
+  border-radius: 4px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.unified-select-option {
+  padding: 8px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.unified-select-option.selected {
+  background-color: #d0d0d0;
+}
+
+.unified-select-option:hover {
+  background-color: #f0f0f0;
+}
+
+.individual-close-icon {
+  fill: #888;
+}
+
+.selected-option {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 8px;
+  padding: 4px 8px;
+  background-color: lightblue;
+  border-radius: 4px;
+}
+
+.selected-options {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.close-icon {
+  cursor: pointer;
+  margin-left: 4px;
+}
