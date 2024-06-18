@@ -39,7 +39,7 @@ function App() {
     setSelectedOptionsMulti(selectedOptions);
   };
 
-   return (
+  return (
     <div
       style={{
         alignItems: "center",
@@ -148,9 +148,18 @@ function App() {
         isClearable={isClearable}
         isDisabled={false} // Prevent the parent from controlling this prop
         onChange={handleSelectChangeMulti}
+        customStyles={customStyles}
         placeholder="Select your options here"
         options={states}
       />
+      <br />
+      <div>
+        {selectedOptionsMulti.length > 0 ? (
+          <div>Selected States: {selectedOptionsMulti.map((option) => option.name).join(', ')}</div>
+        ) : (
+          "Please select options"
+        )}
+      </div>
       <br />
       <div>
         The above demo of the multi-select component lets us choose multiple
@@ -169,6 +178,7 @@ function App() {
 }
 
 export default App;
+
 
 
 // function App() {
