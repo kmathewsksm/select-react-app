@@ -17,12 +17,16 @@ export function UnifiedSelectComponent({
       color: isSelected ? "#000" : "#000",
     }),
   },
+  keepOpenChecked,
 }) {
   const [isDropdownDisplayed, setIsDropdownDisplayed] = useState(isMenuOpen);
   const [selectedValues, setSelectedValues] = useState(() => {
     if (isMulti) {
       return states.reduce(
-        (obj, state, index) => ({ ...obj, [state.abbreviation]: index < 2 }),
+        (obj, state, index) => ({
+          ...obj,
+          [state.abbreviation]: index < 2,
+        }),
         {}
       );
     } else {
@@ -47,14 +51,12 @@ export function UnifiedSelectComponent({
   }, []);
 
   useEffect(() => {
-    // Ensure dropdown display reflects prop changes for single select
     if (!isMulti) {
       setIsDropdownDisplayed(isMenuOpen && !propIsDisabled);
     }
   }, [isMenuOpen, isMulti, propIsDisabled]);
 
   useEffect(() => {
-    // Update dropdown disabled state for multi-select
     if (isMulti) {
       const selectedCount =
         Object.values(selectedValues).filter(Boolean).length;
@@ -64,30 +66,32 @@ export function UnifiedSelectComponent({
 
   const handleOptionClick = (option) => {
     if (isMulti && isDropdownDisabled && !selectedValues[option.abbreviation]) {
-      return; // Prevent adding more options if disabled
+      return;
     }
 
+    const newSelectedValues = isMulti
+      ? {
+          ...selectedValues,
+          [option.abbreviation]: !selectedValues[option.abbreviation],
+        }
+      : option;
+
+    setSelectedValues(newSelectedValues);
+
     if (isMulti) {
-      const newSelectedValues = {
-        ...selectedValues,
-        [option.abbreviation]: !selectedValues[option.abbreviation],
-      };
-      setSelectedValues(newSelectedValues);
-      const selectedCount =
-        Object.values(newSelectedValues).filter(Boolean).length;
-      setIsDropdownDisabled(selectedCount >= 3);
+      const selectedStates = Object.keys(newSelectedValues).filter(
+        (key) => newSelectedValues[key]
+      );
+      setIsDropdownDisabled(selectedStates.length >= 3);
       onChange(
-        Object.entries(newSelectedValues)
-          .filter(([abbreviation, isSelected]) => isSelected)
-          .map(([abbreviation]) =>
-            states.find((state) => state.abbreviation === abbreviation)
-          )
+        selectedStates.map((key) =>
+          states.find((state) => state.abbreviation === key)
+        )
       );
     } else {
-      setSelectedValues(option);
       onChange(option);
-      if (!isMenuOpen) {
-        setIsDropdownDisplayed(false); // Close dropdown after single select if isMenuOpen is false
+      if (!isMenuOpen && !keepOpenChecked) {
+        setIsDropdownDisplayed(false); // Close dropdown after single select if isMenuOpen is false and keepOpenChecked is false
       }
     }
   };
@@ -117,9 +121,12 @@ export function UnifiedSelectComponent({
   };
 
   const toggleDropdown = (e) => {
-    if (!propIsDisabled && (!isMulti || !isDropdownDisabled)) {
+    if (
+      !propIsDisabled &&
+      (!isMulti || !isDropdownDisabled || keepOpenChecked)
+    ) {
       e.stopPropagation();
-      setIsDropdownDisplayed((prev) => !prev);
+      setIsDropdownDisplayed(true);
     }
   };
 
@@ -202,7 +209,7 @@ export function UnifiedSelectComponent({
           {" | "}
           <svg
             className={`unified-select-icon ${
-              isDropdownDisplayed ? "rotated" : ""
+              isDropdownDisplayed || keepOpenChecked ? "rotated" : ""
             }`}
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -213,7 +220,7 @@ export function UnifiedSelectComponent({
           </svg>
         </>
       </div>
-      {isDropdownDisplayed && (
+      {(isDropdownDisplayed || keepOpenChecked) && (
         <div
           className="unified-select-dropdown"
           style={{
@@ -239,14 +246,14 @@ export function UnifiedSelectComponent({
               }}
               style={customStyles.option(
                 isMulti
-                  ? selectedValues[option.abbreviation]
+                  ? !!selectedValues[option.abbreviation]
                   : selectedValues && selectedValues.value === option.value
               )}
             >
               {isMulti && (
                 <input
                   type="checkbox"
-                  checked={selectedValues[option.abbreviation] || false}
+                  checked={selectedValues[option.abbreviation]}
                   onChange={(e) => e.stopPropagation()}
                   style={{ marginRight: "8px" }}
                 />
