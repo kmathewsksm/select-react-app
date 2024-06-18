@@ -86,7 +86,9 @@ export function UnifiedSelectComponent({
     } else {
       setSelectedValues(option);
       onChange(option);
-      setIsDropdownDisplayed(false); // Close dropdown after single select
+      if (!isMenuOpen) {
+        setIsDropdownDisplayed(false); // Close dropdown after single select if isMenuOpen is false
+      }
     }
   };
 
@@ -142,11 +144,7 @@ export function UnifiedSelectComponent({
         (isMulti && isDropdownDisabled) || propIsDisabled ? "disabled" : ""
       }`}
       style={{
-        borderColor: isMulti
-          ? isDropdownDisabled
-            ? "#d3d3d3"
-            : customStyles.control.backgroundColor
-          : propIsDisabled
+        borderColor: propIsDisabled
           ? "#d3d3d3"
           : customStyles.control.backgroundColor,
       }}
@@ -239,11 +237,16 @@ export function UnifiedSelectComponent({
                 e.stopPropagation();
                 handleOptionClick(option);
               }}
+              style={customStyles.option(
+                isMulti
+                  ? selectedValues[option.abbreviation]
+                  : selectedValues && selectedValues.value === option.value
+              )}
             >
               {isMulti && (
                 <input
                   type="checkbox"
-                  checked={selectedValues[option.abbreviation]}
+                  checked={selectedValues[option.abbreviation] || false}
                   onChange={(e) => e.stopPropagation()}
                   style={{ marginRight: "8px" }}
                 />
