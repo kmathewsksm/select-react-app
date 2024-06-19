@@ -7,7 +7,7 @@ export function UnifiedSelectComponent({
   isMulti,
   isClearable,
   isDisabled: propIsDisabled,
-  isMenuOpen = false,
+  isMenuOpen,
   onChange,
   placeholder = "Select your option here",
   customStyles = {
@@ -19,18 +19,20 @@ export function UnifiedSelectComponent({
   },
   keepOpenChecked,
 }) {
-  const [isDropdownDisplayed, setIsDropdownDisplayed] = useState(isMenuOpen);
+  const [isDropdownDisplayed, setIsDropdownDisplayed] = useState(false);
   const [selectedValues, setSelectedValues] = useState(() => {
+    //for multi select
     if (isMulti) {
       return states.reduce(
+        //initilaize selected values for multi select
         (obj, state, index) => ({
           ...obj,
-          [state.abbreviation]: index < 2,
+          [state.abbreviation]: index < 2, //default value
         }),
         {}
       );
     } else {
-      return null;
+      return null; //no option selected first for single select
     }
   });
 
@@ -39,9 +41,11 @@ export function UnifiedSelectComponent({
   const dropdownRef = useRef(null);
 
   useEffect(() => {
+    //to listen to clicks outside dropdown and close
     const onClick = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setIsDropdownDisplayed(false);
+        console.log("print here isMenuOpen", isMenuOpen);
+        setIsDropdownDisplayed(isMenuOpen);
       }
     };
     document.addEventListener("click", onClick);
@@ -51,12 +55,7 @@ export function UnifiedSelectComponent({
   }, []);
 
   useEffect(() => {
-    if (!isMulti) {
-      setIsDropdownDisplayed(isMenuOpen && !propIsDisabled);
-    }
-  }, [isMenuOpen, isMulti, propIsDisabled]);
-
-  useEffect(() => {
+    //disable is maxselectioins are 3
     if (isMulti) {
       const selectedCount =
         Object.values(selectedValues).filter(Boolean).length;
@@ -66,19 +65,20 @@ export function UnifiedSelectComponent({
 
   const handleOptionClick = (option) => {
     if (isMulti && isDropdownDisabled && !selectedValues[option.abbreviation]) {
-      return;
+      return; //returns null for disabled
     }
 
-    const newSelectedValues = isMulti
+    const newSelectedValues = isMulti //update selectedValuesbased on !isMulti
       ? {
           ...selectedValues,
-          [option.abbreviation]: !selectedValues[option.abbreviation],
+          [option.abbreviation]: !selectedValues[option.abbreviation], //chaneg selection
         }
       : option;
 
     setSelectedValues(newSelectedValues);
 
     if (isMulti) {
+      //onchange of multi sleect
       const selectedStates = Object.keys(newSelectedValues).filter(
         (key) => newSelectedValues[key]
       );
@@ -97,15 +97,16 @@ export function UnifiedSelectComponent({
   };
 
   const handleRemoveOption = (e, abbreviation) => {
+    //remove options in ultiselect
     e.stopPropagation();
     const newSelectedValues = {
       ...selectedValues,
-      [abbreviation]: false,
+      [abbreviation]: false, //change values to false showing chosen values
     };
     setSelectedValues(newSelectedValues);
     const selectedCount =
       Object.values(newSelectedValues).filter(Boolean).length;
-    setIsDropdownDisabled(selectedCount >= 3);
+    setIsDropdownDisabled(selectedCount >= 3); //disable here after 3
     onChange(
       Object.entries(newSelectedValues)
         .filter(([abbr, isSelected]) => isSelected)
@@ -114,6 +115,7 @@ export function UnifiedSelectComponent({
   };
 
   const handleClearClick = (e) => {
+    //clear all chosen options
     e.stopPropagation();
     setSelectedValues(isMulti ? {} : null);
     setIsDropdownDisabled(false);
@@ -121,12 +123,13 @@ export function UnifiedSelectComponent({
   };
 
   const toggleDropdown = (e) => {
+    //switch dropdown here
     if (
       !propIsDisabled &&
       (!isMulti || !isDropdownDisabled || keepOpenChecked)
     ) {
       e.stopPropagation();
-      setIsDropdownDisplayed(true);
+      setIsDropdownDisplayed(!isDropdownDisplayed);
     }
   };
 
@@ -134,7 +137,7 @@ export function UnifiedSelectComponent({
     ? Object.values(selectedValues).filter(Boolean).length
     : 0;
 
-  const selectedStateNames = isMulti
+  const selectedStateNames = isMulti //names of selectedStates in multiselect
     ? Object.entries(selectedValues)
         .filter(([abbreviation, isSelected]) => isSelected)
         .map(
@@ -209,7 +212,7 @@ export function UnifiedSelectComponent({
           {" | "}
           <svg
             className={`unified-select-icon ${
-              isDropdownDisplayed || keepOpenChecked ? "rotated" : ""
+              isDropdownDisplayed ? "rotated" : ""
             }`}
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -220,7 +223,7 @@ export function UnifiedSelectComponent({
           </svg>
         </>
       </div>
-      {(isDropdownDisplayed || keepOpenChecked) && (
+      {((!propIsDisabled && isMenuOpen) || isDropdownDisplayed) && (
         <div
           className="unified-select-dropdown"
           style={{

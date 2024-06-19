@@ -146,7 +146,7 @@ function App() {
       <UnifiedSelectComponent
         isMulti={true}
         isClearable={isClearable}
-        isDisabled={false} // Prevent the parent from controlling this prop
+        isDisabled={false}
         onChange={handleSelectChangeMulti}
         customStyles={customStyles}
         placeholder="Select your options here"
