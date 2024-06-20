@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./UnifiedSelectComponent.css";
-import { OptionsList } from "./OptionsList/OptionsList";
-import { states } from "./StateDropdown/states";
+import { OptionsList } from "../OptionsList/OptionsList";
+import { states } from "../StateDropdown/states";
 
 export function UnifiedSelectComponent({
   isMulti,
@@ -21,18 +21,16 @@ export function UnifiedSelectComponent({
 }) {
   const [isDropdownDisplayed, setIsDropdownDisplayed] = useState(false);
   const [selectedValues, setSelectedValues] = useState(() => {
-    //for multi select
     if (isMulti) {
       return states.reduce(
-        //initilaize selected values for multi select
         (obj, state, index) => ({
           ...obj,
-          [state.abbreviation]: index < 2, //default value
+          [state.abbreviation]: index < 2,
         }),
         {}
       );
     } else {
-      return null; //no option selected first for single select
+      return null;
     }
   });
 
@@ -41,7 +39,6 @@ export function UnifiedSelectComponent({
   const dropdownRef = useRef(null);
 
   useEffect(() => {
-    //to listen to clicks outside dropdown and close
     const onClick = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         console.log("print here isMenuOpen", isMenuOpen);
@@ -55,7 +52,6 @@ export function UnifiedSelectComponent({
   }, []);
 
   useEffect(() => {
-    //disable is maxselectioins are 3
     if (isMulti) {
       const selectedCount =
         Object.values(selectedValues).filter(Boolean).length;
@@ -65,20 +61,19 @@ export function UnifiedSelectComponent({
 
   const handleOptionClick = (option) => {
     if (isMulti && isDropdownDisabled && !selectedValues[option.abbreviation]) {
-      return; //returns null for disabled
+      return;
     }
 
-    const newSelectedValues = isMulti //update selectedValuesbased on !isMulti
+    const newSelectedValues = isMulti
       ? {
           ...selectedValues,
-          [option.abbreviation]: !selectedValues[option.abbreviation], //chaneg selection
+          [option.abbreviation]: !selectedValues[option.abbreviation],
         }
       : option;
 
     setSelectedValues(newSelectedValues);
 
     if (isMulti) {
-      //onchange of multi sleect
       const selectedStates = Object.keys(newSelectedValues).filter(
         (key) => newSelectedValues[key]
       );
@@ -91,22 +86,21 @@ export function UnifiedSelectComponent({
     } else {
       onChange(option);
       if (!isMenuOpen && !keepOpenChecked) {
-        setIsDropdownDisplayed(false); // Close dropdown after single select if isMenuOpen is false and keepOpenChecked is false
+        setIsDropdownDisplayed(false);
       }
     }
   };
 
   const handleRemoveOption = (e, abbreviation) => {
-    //remove options in ultiselect
     e.stopPropagation();
     const newSelectedValues = {
       ...selectedValues,
-      [abbreviation]: false, //change values to false showing chosen values
+      [abbreviation]: false,
     };
     setSelectedValues(newSelectedValues);
     const selectedCount =
       Object.values(newSelectedValues).filter(Boolean).length;
-    setIsDropdownDisabled(selectedCount >= 3); //disable here after 3
+    setIsDropdownDisabled(selectedCount >= 3);
     onChange(
       Object.entries(newSelectedValues)
         .filter(([abbr, isSelected]) => isSelected)
@@ -115,7 +109,6 @@ export function UnifiedSelectComponent({
   };
 
   const handleClearClick = (e) => {
-    //clear all chosen options
     e.stopPropagation();
     setSelectedValues(isMulti ? {} : null);
     setIsDropdownDisabled(false);
@@ -123,7 +116,6 @@ export function UnifiedSelectComponent({
   };
 
   const toggleDropdown = (e) => {
-    //switch dropdown here
     if (
       !propIsDisabled &&
       (!isMulti || !isDropdownDisabled || keepOpenChecked)
@@ -137,7 +129,7 @@ export function UnifiedSelectComponent({
     ? Object.values(selectedValues).filter(Boolean).length
     : 0;
 
-  const selectedStateNames = isMulti //names of selectedStates in multiselect
+  const selectedStateNames = isMulti
     ? Object.entries(selectedValues)
         .filter(([abbreviation, isSelected]) => isSelected)
         .map(
